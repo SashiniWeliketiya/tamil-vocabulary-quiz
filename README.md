@@ -29,4 +29,5 @@ A lightweight, interactive desktop application built using **Python** and **Tkin
    cd tamil-vocabulary-quiz
 
 
-![Uploading Screenshot 2026-09-11 203920.png…]()
+<img width="1917" height="1030" alt="Screenshot 2026-09-11 203920" src="https://github.com/user-attachments/assets/55f9068c-0da5-44b2-8a3e-6dcfe81265f7" />
+
