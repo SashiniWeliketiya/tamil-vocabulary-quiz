@@ -1,4 +1,4 @@
-# 🎈 Trilingual Tamil Vocabulary Quiz App
+# Trilingual Tamil Vocabulary Quiz App
 
 A lightweight, interactive desktop application built using **Python** and **Tkinter** designed to help kids learn basic Tamil vocabulary through quiz-based gamification with **English** and **Sinhala** language interfaces.
 
