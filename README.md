@@ -27,3 +27,6 @@ A lightweight, interactive desktop application built using **Python** and **Tkin
    ```bash
    git clone [https://github.com/SashiniWeliketiya/tamil-vocabulary-quiz.git](https://github.com/SashiniWeliketiya/tamil-vocabulary-quiz.git)
    cd tamil-vocabulary-quiz
+
+
+![Uploading Screenshot 2026-09-11 203920.png…]()
