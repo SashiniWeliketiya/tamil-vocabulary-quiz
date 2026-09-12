@@ -2,7 +2,7 @@ import random
 import tkinter as tk
 from tkinter import messagebox
 
-# Tamil Words Dataset (Without Grade 1 Label)
+# Tamil Words Dataset
 words = [
     {"tamil": "அணில்", "en": "Squirrel", "si": "ලේනා"},
     {"tamil": "ஆடு", "en": "Goat", "si": "එළුවා"},
