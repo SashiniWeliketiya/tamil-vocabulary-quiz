@@ -1,4 +1,4 @@
-Live Demo:- file:///C:/Users/sashi/OneDrive/Desktop/python/index.html
+Live Demo:- 
 
 # Trilingual Tamil Vocabulary Quiz App
 
