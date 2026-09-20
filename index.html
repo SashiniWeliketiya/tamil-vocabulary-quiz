@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magic Tamil Word Quiz 🌟</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #F0F4F8;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #1E293B;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            border: 2px solid #CBD5E1;
+            margin: 20px;
+        }
+
+        /* Header Bar */
+        .header-bar {
+            background: #E2E8F0;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .home-btn {
+            background: #94A3B8;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .home-btn:hover {
+            background: #64748B;
+        }
+
+        .score-display {
+            font-size: 14px;
+            font-weight: bold;
+            color: #0F172A;
+        }
+
+        /* Card Content */
+        .card-body {
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 22px;
+            color: #1E293B;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #64748B;
+            margin-bottom: 25px;
+        }
+
+        .q-num {
+            font-size: 13px;
+            font-weight: bold;
+            color: #64748B;
+            text-align: left;
+            margin-bottom: 8px;
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1E293B;
+            margin-bottom: 20px;
+            text-align: left;
+            min-height: 50px;
+        }
+
+        /* Buttons */
+        .mode-btn {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            color: white;
+            transition: 0.2s;
+        }
+
+        .btn-si { background: #3B82F6; }
+        .btn-si:hover { background: #2563EB; }
+
+        .btn-en { background: #10B981; }
+        .btn-en:hover { background: #059669; }
+
+        .option-btn {
+            width: 100%;
+            padding: 12px;
+            margin: 6px 0;
+            background: #F1F5F9;
+            color: #0F172A;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option-btn:hover {
+            background: #E2E8F0;
+        }
+
+        /* Alert Popup Styling */
+        .alert-box {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .alert-success { background: #DEF7EC; color: #03543F; border: 1px solid #85H9C8; }
+        .alert-error { background: #FDE8E8; color: #9B1C1C; border: 1px solid #F8B4B4; }
+
+        .finish-title {
+            font-size: 20px;
+            color: #D97706;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .final-score {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="app-container">
+        <!-- Dynamic content will load here -->
+    </div>
+
+    <script>
+        const words = [
+            {"tamil": "அணில்", "en": "Squirrel", "si": "ලේනා"},
+            {"tamil": "ஆடு", "en": "Goat", "si": "එළුවා"},
+            {"tamil": "இலை", "en": "Leaf", "si": "කොළය"},
+            {"tamil": "ஈ", "en": "Fly", "si": "මැස්සා"},
+            {"tamil": "உழவு", "en": "Ploughing", "si": "හාෑම"},
+            {"tamil": "ஊசி", "en": "Needle", "si": "ඉඳිකටුව"},
+            {"tamil": "எலி", "en": "Mouse", "si": "මීයා"},
+            {"tamil": "ஏணி", "en": "Ladder", "si": "ඉණිමඟ"},
+            {"tamil": "ஐந்து", "en": "Five", "si": "පහ"},
+            {"tamil": "ஒன்று", "en": "One", "si": "එක"}
+        ];
+
+        let currentLang = "si";
+        let currentQuestion = 0;
+        let score = 0;
+        let questionsList = [];
+        let currentQData = null;
+        let options = [];
+
+        const container = document.getElementById("app-container");
+
+        function showHome() {
+            container.innerHTML = `
+                <div class="card-body">
+                    <h1>Tamil Word Quiz 🎈</h1>
+                    <p class="subtitle">Select Mode / මාදිලිය තෝරන්න:</p>
+                    <button class="mode-btn btn-si" onclick="startGame('si')">🇱🇰 සිංහල Mode</button>
+                    <button class="mode-btn btn-en" onclick="startGame('en')">🇬🇧 English Mode</button>
+                </div>
+            `;
+        }
+
+        function startGame(lang) {
+            currentLang = lang;
+            score = 0;
+            currentQuestion = 0;
+            questionsList = [...words].sort(() => Math.random() - 0.5);
+            loadQuizUI();
+        }
+
+        function loadQuizUI() {
+            if (currentQuestion < questionsList.length) {
+                currentQData = questionsList[currentQuestion];
+                let meaning = currentLang === "si" ? currentQData.si : currentQData.en;
+                let promptText = currentLang === "si" 
+                    ? `'${meaning}' කියන්නේ දෙමළෙන් මොකක්ද?` 
+                    : `What is '${meaning}' in Tamil?`;
+
+                // Generate options
+                options = [currentQData.tamil];
+                while (options.length < 4) {
+                    let randomWord = words[Math.floor(Math.random() * words.length)].tamil;
+                    if (!options.includes(randomWord)) {
+                        options.push(randomWord);
+                    }
+                }
+                options.sort(() => Math.random() - 0.5);
+
+                container.innerHTML = `
+                    <div class="header-bar">
+                        <button class="home-btn" onclick="showHome()">🏠 Home</button>
+                        <div class="score-display">⭐ Score: ${score}</div>
+                    </div>
+                    <div class="card-body" style="padding: 20px 30px 30px 30px;">
+                        <div class="q-num">Question ${currentQuestion + 1}/${questionsList.length}</div>
+                        <div class="question-text">${promptText}</div>
+                        <div id="options-container">
+                            ${options.map((opt, idx) => `<button class="option-btn" onclick="checkAnswer('${opt}')">${opt}</button>`).join('')}
+                        </div>
+                        <div id="alert-box" class="alert-box"></div>
+                    </div>
+                `;
+            } else {
+                showFinishScreen();
+            }
+        }
+
+        function checkAnswer(selected) {
+            let correct = currentQData.tamil;
+            const alertBox = document.getElementById("alert-box");
+            const optionBtns = document.querySelectorAll(".option-btn");
+
+            // Disable buttons after selection
+            optionBtns.forEach(btn => btn.disabled = true);
+
+            if (selected === correct) {
+                score += 10;
+                alertBox.className = "alert-box alert-success";
+                alertBox.innerHTML = "✅ Correct Answer! Great Job! 🌟";
+            } else {
+                alertBox.className = "alert-box alert-error";
+                alertBox.innerHTML = `❌ Wrong choice!<br>Correct answer was: ${correct}`;
+            }
+            alertBox.style.display = "block";
+
+            // Wait 1.5 seconds and move to next question
+            setTimeout(() => {
+                currentQuestion++;
+                loadQuizUI();
+            }, 1500);
+        }
+
+        function showFinishScreen() {
+            container.innerHTML = `
+                <div class="card-body">
+                    <div class="finish-title">🏆 Game Completed! 🏆</div>
+                    <div class="final-score">Total Score: ${score} / 100</div>
+                    <button class="mode-btn btn-si" onclick="showHome()">Play Again 🔄</button>
+                </div>
+            `;
+        }
+
+        // Initialize Home on load
+        showHome();
+    </script>
+</body>
+</html>
